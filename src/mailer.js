@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import nodemailer from 'nodemailer';
 
 const from = '"bibliophile" <info@bibliophile.com>';
@@ -23,6 +22,20 @@ export function sendConfirmationEmail(user) {
     text: `
         Welcome to Bibliophile! Please confirm your email. 
         ${user.generateConfirmationUrl()} 
+        `,
+  };
+  transport.sendMail(email);
+}
+
+export function sendResetPasswordEmail(user) {
+  const transport = setup();
+  const email = {
+    from,
+    to: user.email,
+    subject: 'Reset Password',
+    text: `
+        To reset your password please click this link
+        ${user.generateResetPasswordLink()} 
         `,
   };
   transport.sendMail(email);
